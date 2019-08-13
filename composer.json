@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Banners",
+    "type": "magento-module",
+    "license": "OSL-V3.0",
+    "homepage": "",
+    "description": "Banner is a flexible solution that allow to manage banners in the easiest way.",
+    "authors": [
+    {
+        "name": "Kamran Rafiq Malik",
+        "email": "kamran.malik@unitedsol.net"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
