@@ -15,6 +15,19 @@ class Mage_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Controller
 		$this->_initAction()
 			->renderLayout();
 	}
+	
+	/**
+     * Get categories fieldset block
+     *
+     */
+    public function categoriesAction()
+    {
+        $this->_initProduct();
+
+        $this->getResponse()->setBody(
+            $this->getLayout()->createBlock('adminhtml/catalog_product_edit_tab_categories')->toHtml()
+        );
+    }
 
 	public function editAction() {
 		$id     = $this->getRequest()->getParam('id');
