@@ -69,7 +69,16 @@ class Mage_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminhtml_
               ),
           ),
       ));
-		
+	
+	 $fieldset->addField('store_id','multiselect',array(
+			'name'      => 'stores[]',
+            'label'     => Mage::helper('banners')->__('Store View'),
+            'title'     => Mage::helper('banners')->__('Store View'),
+            'required'  => true,
+			'values'    => Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, true)
+		));
+	
+	
       $fieldset->addField('status', 'select', array(
           'label'     => Mage::helper('banners')->__('Status'),
           'name'      => 'status',

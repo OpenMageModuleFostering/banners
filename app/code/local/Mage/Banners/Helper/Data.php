@@ -338,11 +338,15 @@ class Mage_Banners_Helper_Data extends Mage_Core_Helper_Abstract
 			$read= $resource->getConnection('core_read');
 			$bannersTable = $resource->getTableName('banners');
 			
-			$select = $read->select()
+			$banners = Mage::getModel('banners/banners')->getCollection()
+							->addStoreFilter(Mage::app()->getStore(true)->getId())
+							->getData();
+			
+			/*$select = $read->select()
 			   ->from($bannersTable,array('banners_id','title','bannerimage','link','target','textblend','content','status'))
 			   ->where('status',1)
 			   ->order('created_time ASC') ;
-				$banners = $read->fetchAll($select);
+				$banners = $read->fetchAll($select);*/
 			
 			$bannersXML = '';
 			$bannersXML .= '<?xml version="1.0" encoding="utf-8" ?>';

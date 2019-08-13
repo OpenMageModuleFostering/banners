@@ -26,6 +26,8 @@ $installer->startSetup();
 
 $installer->run("
 DROP TABLE `{$this->getTable('banners')}`;
+DROP TABLE `{$this->getTable('banners_store')}`;
+
 ");
 
 $installer->endSetup(); 
