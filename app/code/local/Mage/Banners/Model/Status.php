@@ -8,8 +8,8 @@ class Mage_Banners_Model_Status extends Varien_Object
     static public function getOptionArray()
     {
         return array(
-            self::STATUS_ENABLED    => Mage::helper('banners')->__('Enabled'),
-            self::STATUS_DISABLED   => Mage::helper('banners')->__('Disabled')
+            self::STATUS_ENABLED    => Mage::helper('adminhtml')->__('Enabled'),
+            self::STATUS_DISABLED   => Mage::helper('adminhtml')->__('Disabled')
         );
     }
 }
