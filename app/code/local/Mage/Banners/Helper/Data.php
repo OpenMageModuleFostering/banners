@@ -332,5 +332,82 @@ class Mage_Banners_Helper_Data extends Mage_Core_Helper_Abstract
 		return $value;	
     }
 	
+	public function generateXML() {
+			
+			$resource = Mage::getSingleton('core/resource');
+			$read= $resource->getConnection('core_read');
+			$bannersTable = $resource->getTableName('banners');
+			
+			$select = $read->select()
+			   ->from($bannersTable,array('banners_id','title','bannerimage','link','target','textblend','content','status'))
+			   ->where('status',1)
+			   ->order('created_time ASC') ;
+				$banners = $read->fetchAll($select);
+			
+			$bannersXML = '';
+			$bannersXML .= '<?xml version="1.0" encoding="utf-8" ?>';
+			$bannersXML .= '<Banner ';
+			
+			$bannersXML .= 'bannerWidth="'.$this->bannerWidth().'" ';
+			$bannersXML .= 'bannerHeight="'.$this->bannerHeight().'" ';
+			$bannersXML .= 'bannerBackgroundColor="'.$this->bannerBackgroundColor().'" ';
+			$bannersXML .= 'autoPlay="'.$this->autoPlay().'" ';
+			$bannersXML .= 'imageResizeToFit="'.$this->imageResizeToFit().'" ';
+			$bannersXML .= 'imageRandomizeOrder="'.$this->imageRandomizeOrder().'" ';
+			
+			
+			$bannersXML .= 'textSize="'.$this->textSize().'" ';
+			$bannersXML .= 'textColor="'.$this->textColor().'" ';
+			$bannersXML .= 'textAreaWidth="'.$this->textAreaWidth().'" ';
+			$bannersXML .= 'textLineSpacing="'.$this->textLineSpacing().'" ';
+			$bannersXML .= 'textLetterSpacing="'.$this->textLetterSpacing().'" ';
+			$bannersXML .= 'textMarginLeft="'.$this->textMarginLeft().'" ';
+			$bannersXML .= 'textMarginBottom="'.$this->textMarginBottom().'" ';
+			$bannersXML .= 'textBackgroundBlur="'.$this->textBackgroundBlur().'" ';
+			$bannersXML .= 'textBackgroundColor="'.$this->textBackgroundColor().'" ';
+			$bannersXML .= 'textBackgroundTransparency="'.$this->textBackgroundTransparency().'" ';
+			
+			$bannersXML .= 'transitionType="'.$this->transitionType().'" ';
+			$bannersXML .= 'transitionRandomEffects="'.$this->transitionRandomEffects().'" ';
+			$bannersXML .= 'transitionDelayTimeFixed="'.$this->transitionDelayTimeFixed().'" ';
+			$bannersXML .= 'transitionDelayTimePerWord="'.$this->transitionDelayTimePerWord().'" ';
+			$bannersXML .= 'transitionSpeed="'.$this->transitionSpeed().'" ';
+			$bannersXML .= 'transitionBlur="'.$this->transitionBlur().'" ';
+			
+			$bannersXML .= 'showTimerClock="'.$this->showTimerClock().'" ';
+			$bannersXML .= 'showNextButton="'.$this->showNextButton().'" ';
+			$bannersXML .= 'showBackButton="'.$this->showBackButton().'" ';
+			$bannersXML .= 'showNumberButtons="'.$this->showNumberButtons().'" ';
+			$bannersXML .= 'showNumberButtonsAlways="'.$this->showNumberButtonsAlways().'" ';
+			$bannersXML .= 'showNumberButtonsHorizontal="'.$this->showNumberButtonsHorizontal().'" ';
+			$bannersXML .= 'showNumberButtonsAscending="'.$this->showNumberButtonsAscending().'" ';
+			$bannersXML .= 'showPlayPauseOnTimer="'.$this->showPlayPauseOnTimer().'" ';
+			$bannersXML .= 'alignButtonsLeft="'.$this->alignButtonsLeft().'" ';
+			$bannersXML .= 'alignTextTop="'.$this->alignTextTop().'" ';
+			
+			$bannersXML .= '> ';
+			
+			
+			foreach ($banners as $_banner) {
+				
+				$bannerImage = Mage::getBaseUrl('media')."Banners/images/".$_banner["bannerimage"]; 
+				$bannersXML .= '<item buttonLabel="" ';
+				$bannersXML .= 'image="'.$bannerImage.'" ';
+				$bannersXML .= 'link="'.$_banner["link"].'" ';
+				$bannersXML .= 'target="'.$_banner["target"].'" ';
+				$bannersXML .= 'delay="" ';
+				$bannersXML .= 'textBlend="'.$_banner["textblend"].'"> ';
+				$bannersXML .= '<![CDATA['.$_banner["content"].']]> ';
+				$bannersXML .= '</item> ';	
+				
+			}
+			$bannersXML .= '</Banner>';
+			
+			$fileName = Mage::getBaseDir('media') . "/Banners/". DS ."data.xml";
+			$file= fopen($fileName, "w");
+			fwrite($file, $bannersXML);
+			fclose($file);
+	}
+	
 	
 }

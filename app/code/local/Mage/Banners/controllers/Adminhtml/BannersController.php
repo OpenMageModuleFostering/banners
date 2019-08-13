@@ -61,7 +61,7 @@ class Mage_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Controller
 				//Save Image Tag in DB for GRID View
 				$imgName = $_FILES['bannerimage']['name'];
 				$imgPath = Mage::getBaseUrl('media')."Banners/images/thumb/".$imgName;
-				$data['filethumbgrid'] = '<img src="'.$imgPath.'" border="0" width="150" height="150" />';
+				$data['filethumbgrid'] = '<img src="'.$imgPath.'" border="0" width="75" height="75" />';
 			}
 			
 			$model = Mage::getModel('banners/banners');		
@@ -119,7 +119,7 @@ class Mage_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Controller
 					} catch (Exception $e) {}
 				}
 				
-				$this->generateXML();
+				Mage::helper('banners')->generateXML();
 				
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('banners')->__('Banner was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
@@ -140,85 +140,6 @@ class Mage_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Controller
         Mage::getSingleton('adminhtml/session')->addError(Mage::helper('banners')->__('Unable to find Banner to save'));
         $this->_redirect('*/*/');
 	}
- 
- 
- 	public function generateXML() {
-			
-			$resource = Mage::getSingleton('core/resource');
-			$read= $resource->getConnection('core_read');
-			$bannersTable = $resource->getTableName('banners');
-			
-			$select = $read->select()
-			   ->from($bannersTable,array('banners_id','title','bannerimage','link','target','textblend','content','status'))
-			   ->where('status',1)
-			   ->order('created_time ASC') ;
-				$banners = $read->fetchAll($select);
-			
-			$bannersXML = '';
-			$bannersXML .= '<?xml version="1.0" encoding="utf-8" ?>';
-			$bannersXML .= '<Banner ';
-			
-			$bannersXML .= 'bannerWidth="'.Mage::helper('banners')->bannerWidth().'" ';
-			$bannersXML .= 'bannerHeight="'.Mage::helper('banners')->bannerHeight().'" ';
-			$bannersXML .= 'bannerBackgroundColor="'.Mage::helper('banners')->bannerBackgroundColor().'" ';
-			$bannersXML .= 'autoPlay="'.Mage::helper('banners')->autoPlay().'" ';
-			$bannersXML .= 'imageResizeToFit="'.Mage::helper('banners')->imageResizeToFit().'" ';
-			$bannersXML .= 'imageRandomizeOrder="'.Mage::helper('banners')->imageRandomizeOrder().'" ';
-			
-			
-			$bannersXML .= 'textSize="'.Mage::helper('banners')->textSize().'" ';
-			$bannersXML .= 'textColor="'.Mage::helper('banners')->textColor().'" ';
-			$bannersXML .= 'textAreaWidth="'.Mage::helper('banners')->textAreaWidth().'" ';
-			$bannersXML .= 'textLineSpacing="'.Mage::helper('banners')->textLineSpacing().'" ';
-			$bannersXML .= 'textLetterSpacing="'.Mage::helper('banners')->textLetterSpacing().'" ';
-			$bannersXML .= 'textMarginLeft="'.Mage::helper('banners')->textMarginLeft().'" ';
-			$bannersXML .= 'textMarginBottom="'.Mage::helper('banners')->textMarginBottom().'" ';
-			$bannersXML .= 'textBackgroundBlur="'.Mage::helper('banners')->textBackgroundBlur().'" ';
-			$bannersXML .= 'textBackgroundColor="'.Mage::helper('banners')->textBackgroundColor().'" ';
-			$bannersXML .= 'textBackgroundTransparency="'.Mage::helper('banners')->textBackgroundTransparency().'" ';
-			
-			$bannersXML .= 'transitionType="'.Mage::helper('banners')->transitionType().'" ';
-			$bannersXML .= 'transitionRandomEffects="'.Mage::helper('banners')->transitionRandomEffects().'" ';
-			$bannersXML .= 'transitionDelayTimeFixed="'.Mage::helper('banners')->transitionDelayTimeFixed().'" ';
-			$bannersXML .= 'transitionDelayTimePerWord="'.Mage::helper('banners')->transitionDelayTimePerWord().'" ';
-			$bannersXML .= 'transitionSpeed="'.Mage::helper('banners')->transitionSpeed().'" ';
-			$bannersXML .= 'transitionBlur="'.Mage::helper('banners')->transitionBlur().'" ';
-			
-			$bannersXML .= 'showTimerClock="'.Mage::helper('banners')->showTimerClock().'" ';
-			$bannersXML .= 'showNextButton="'.Mage::helper('banners')->showNextButton().'" ';
-			$bannersXML .= 'showBackButton="'.Mage::helper('banners')->showBackButton().'" ';
-			$bannersXML .= 'showNumberButtons="'.Mage::helper('banners')->showNumberButtons().'" ';
-			$bannersXML .= 'showNumberButtonsAlways="'.Mage::helper('banners')->showNumberButtonsAlways().'" ';
-			$bannersXML .= 'showNumberButtonsHorizontal="'.Mage::helper('banners')->showNumberButtonsHorizontal().'" ';
-			$bannersXML .= 'showNumberButtonsAscending="'.Mage::helper('banners')->showNumberButtonsAscending().'" ';
-			$bannersXML .= 'showPlayPauseOnTimer="'.Mage::helper('banners')->showPlayPauseOnTimer().'" ';
-			$bannersXML .= 'alignButtonsLeft="'.Mage::helper('banners')->alignButtonsLeft().'" ';
-			$bannersXML .= 'alignTextTop="'.Mage::helper('banners')->alignTextTop().'" ';
-			
-			$bannersXML .= '> ';
-			
-			
-			foreach ($banners as $_banner) {
-				
-				$bannerImage = Mage::getBaseUrl('media')."Banners/images/".$_banner["bannerimage"]; 
-				$bannersXML .= '<item buttonLabel="" ';
-				$bannersXML .= 'image="'.$bannerImage.'" ';
-				$bannersXML .= 'link="'.$_banner["link"].'" ';
-				$bannersXML .= 'target="'.$_banner["target"].'" ';
-				$bannersXML .= 'delay="" ';
-				$bannersXML .= 'textBlend="'.$_banner["textblend"].'"> ';
-				$bannersXML .= '<![CDATA['.$_banner["content"].']]> ';
-				$bannersXML .= '</item> ';	
-				
-			}
-			$bannersXML .= '</Banner>';
-			
-			$fileName = Mage::getBaseDir('media') . "/Banners/". DS ."data.xml";
-			$file= fopen($fileName, "w");
-			fwrite($file, $bannersXML);
-			fclose($file);
-	}
- 	
  
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {

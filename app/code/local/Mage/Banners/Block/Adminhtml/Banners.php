@@ -8,12 +8,6 @@ class Mage_Banners_Block_Adminhtml_Banners extends Mage_Adminhtml_Block_Widget_G
     $this->_headerText = Mage::helper('banners')->__('Banners Manager');
     $this->_addButtonLabel = Mage::helper('banners')->__('Add Banner');
 	
-	$this->_addButton('xml', array(
-            'label'     => Mage::helper('adminhtml')->__('Generate XML'),
-            'onclick'   => 'saveAndContinueEdit()',
-            'class'     => 'save',
-        ), -100);
-	
     parent::__construct();
   }
 }
