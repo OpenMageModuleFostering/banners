@@ -3,6 +3,7 @@ class Mage_Banners_Block_Banners extends Mage_Core_Block_Template
 {
 	public function _prepareLayout()
     {
+		Mage::helper('banners')->generateXML();
 		return parent::_prepareLayout();
     }
     
