@@ -24,15 +24,15 @@
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<script type="text/javascript" src="<?php echo Mage::getBaseUrl('media'); ?>media/Banners/swf/swfobject.js"></script>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('media'); ?>/Banners/swf/swfobject.js"></script>
 <table width="100%" border="0" align="left" cellspacing="0" cellpadding="0">
 	<tr>
 	  <td align="center" valign="middle">
 		<div id="flashcontent">
 			<script type="text/javascript">
 				//Local
-				var so = new SWFObject("<?php echo Mage::getBaseUrl('media'); ?>media/Banners/banner.swf?="+<?php echo time();?>, "mymovie", "<?php echo Mage::helper('banners')->bannerWidth(); ?>", "<?php echo Mage::helper('banners')->bannerHeight(); ?>", "<?php echo Mage::helper('banners')->transitionType(); ?>");
-				so.addVariable("xmlPath", "<?php echo Mage::getBaseUrl('media'); ?>media/Banners/data.xml?="+<?php echo time();?>);
+				var so = new SWFObject("<?php echo Mage::getBaseUrl('media'); ?>/Banners/banner.swf?="+<?php echo time();?>, "mymovie", "<?php echo Mage::helper('banners')->bannerWidth(); ?>", "<?php echo Mage::helper('banners')->bannerHeight(); ?>", "<?php echo Mage::helper('banners')->transitionType(); ?>");
+				so.addVariable("xmlPath", "<?php echo Mage::getBaseUrl('media'); ?>/Banners/data.xml?="+<?php echo time();?>);
 				so.addParam("menu", "false");
 				so.addParam('allowscriptaccess','always');
 				so.addParam("wmode", "transparent");
