@@ -1,7 +1,7 @@
 {
-    "name": "OpenMageModuleFostering\/Banners",
+    "name": "openmage-module-fostering\/banners",
     "type": "magento-module",
-    "license": "OSL-V3.0",
+    "license": "OSL-3.0",
     "homepage": "",
     "description": "Banner is a flexible solution that allow to manage banners in the easiest way.",
     "authors": [
